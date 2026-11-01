@@ -213,7 +213,7 @@ function Index() {
             <div className="reveal mt-16 grid gap-px border sm:grid-cols-3">
               {[
                 { k: "Email", v: site.email, href: mail, ext: false },
-                { k: "LinkedIn", v: isPlaceholder(site.linkedin) ? "Coming soon" : "linkedin.com", href: site.linkedin, ext: true },
+                { k: "LinkedIn", v: isPlaceholder(site.linkedin) ? "Coming soon" : "https://www.linkedin.com/in/maitreyapathak", href: site.linkedin, ext: true },
                 { k: "GitHub", v: "github.com/MaitreyaPathak", href: site.github, ext: true },
               ].map((c) => {
                 const cls = "group flex items-center justify-between p-6 transition-colors hover:bg-card";
