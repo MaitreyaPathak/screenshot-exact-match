@@ -7,8 +7,8 @@ import coverAtlas from "@/assets/cover-atlas.jpg";
 // Replace "#" placeholders with real URLs. Placeholders render as "Coming soon" instead of a broken link.
 export const site = {
   name: "Maitreya Pathak",
-  email: "YOUR_EMAIL@example.com", // TODO: replace
-  linkedin: "#", // TODO: replace with your LinkedIn URL
+  email: "maitreyapath@gmail.com", // TODO: replace
+  linkedin: "https://linkedin.com/in/maitreyapathak",
   github: "https://github.com/MaitreyaPathak",
   resumeUrl: "#", // TODO: replace with resume PDF URL (e.g. /resume.pdf in public/)
 };
@@ -84,7 +84,7 @@ export const experience = [
     org: "Axxela",
     role: "Analyst",
     period: "Jul 2025 – Nov 2025",
-    body: "Worked on analytical frameworks using macroeconomic, geopolitical, and supply-demand signals. Ranked #1 among analysts.",
+    body: "Worked on analytical frameworks using macroeconomic, geopolitical, and supply-demand signals. Ranked No.1  among a joining cohort of  28 analysts.",
   },
   {
     org: "iMumz",
@@ -94,7 +94,7 @@ export const experience = [
   },
   {
     org: "TEDx IIT Indore",
-    role: "Curator / Head of Operations",
+    role: "Curator ",
     period: "",
     body: "Led a 45+ member team and contributed to organising an event with 2,000+ attendees.",
   },
