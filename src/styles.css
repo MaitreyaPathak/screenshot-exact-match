@@ -29,6 +29,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-overlay: var(--overlay);
 }
 
 :root {
@@ -52,6 +53,7 @@
   --border: oklch(0.31 0.01 140);
   --input: oklch(0.31 0.01 140);
   --ring: oklch(0.89 0.18 128);
+  --overlay: oklch(0.08 0.003 145);
 }
 
 @layer base {
@@ -62,6 +64,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    letter-spacing: 0;
   }
   ::selection { background: var(--primary); color: var(--primary-foreground); }
   :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
@@ -70,7 +73,7 @@
 @utility label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
