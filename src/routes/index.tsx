@@ -171,7 +171,19 @@ function Index() {
           <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-12">
             <div className="reveal lg:col-span-5">
               <p className="label">(04) — About</p>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight md:text-6xl">A little about me.</h2>
+              <div className="mt-8 flex items-start gap-6">
+                <figure className="shrink-0">
+                  {isPlaceholder(site.portraitUrl) ? (
+                    <div aria-label="Photograph placeholder" className="flex h-28 w-24 items-center justify-center border bg-card md:h-32 md:w-28">
+                      <span className="font-mono text-lg text-muted-foreground">MP</span>
+                    </div>
+                  ) : (
+                    <img src={site.portraitUrl} alt="Portrait of Maitreya Pathak" width={224} height={256} className="h-28 w-24 border object-cover md:h-32 md:w-28" />
+                  )}
+                  <figcaption className="label mt-2">Maitreya Pathak</figcaption>
+                </figure>
+                <h2 className="text-4xl font-extrabold tracking-tight md:text-6xl">A little about me.</h2>
+              </div>
               <div className="mt-8 space-y-5 leading-relaxed text-muted-foreground">
                 <p>I'm a 2025 B.Tech graduate from IIT Indore in Metallurgical Engineering and Materials Science.</p>
                 <p>My experience spans product growth, business strategy, and analytical problem-solving. I'm interested in early-stage and growth-stage companies building better products and processes.</p>
