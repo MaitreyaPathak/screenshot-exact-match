@@ -88,7 +88,7 @@ function ProjectCard({ p, i, onSelect }: { p: Project; i: number; onSelect: () =
         <p className="label">{p.category}</p>
         <span className="label shrink-0">{String(i + 1).padStart(2, "0")}</span>
       </div>
-      <h3 className="mt-3 text-2xl font-bold leading-tight transition-colors group-hover:text-primary md:text-3xl"><Button variant="link" onClick={onSelect} className="h-auto whitespace-normal p-0 text-left text-[inherit] font-[inherit] leading-[inherit] text-foreground hover:no-underline after:absolute after:inset-0 focus-visible:after:ring-2 focus-visible:after:ring-ring">{p.title}</Button></h3>
+      <h3 className="mt-3 font-bold"><Button variant="link" onClick={onSelect} className="h-auto whitespace-normal p-0 text-left text-2xl font-bold leading-tight text-foreground hover:text-primary hover:no-underline after:absolute after:inset-0 focus-visible:after:ring-2 focus-visible:after:ring-ring md:text-3xl">{p.title}</Button></h3>
       <p className="mt-1 text-sm text-foreground/80">{p.subtitle}</p>
       <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{p.description}</p>
       <div className="mt-5 flex flex-wrap gap-2">
@@ -111,21 +111,21 @@ function Index() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="mx-auto max-w-7xl px-6 pb-16 pt-16 md:pb-20 md:pt-20">
+        <section className="mx-auto max-w-7xl px-6 pb-10 pt-10 md:pb-20 md:pt-20">
           <p className="label reveal">Maitreya Pathak — IIT Indore '25</p>
-          <h1 className="reveal mt-8 max-w-6xl text-4xl font-extrabold leading-[1.05] sm:text-6xl lg:text-7xl xl:text-8xl">
+          <h1 className="reveal mt-6 max-w-6xl text-4xl font-extrabold leading-[1.05] sm:text-6xl md:mt-8 lg:text-7xl xl:text-8xl">
             I find problems worth solving.{" "}
             <span className="text-primary">Then figure out what to do about them.</span>
           </h1>
-          <p className="reveal mt-10 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+          <p className="reveal mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:mt-10 md:text-lg">
             I'm an IIT Indore graduate with experience across product growth, business strategy, and analytical problem-solving. I've worked on growth experiments, business processes, and product strategy, and enjoy taking ambiguous problems from analysis to execution.
           </p>
-          <div className="reveal mt-10 flex flex-wrap gap-3">
-            <Button asChild className="h-12 px-6 font-bold"><a href="#work">Explore My Work <ArrowUpRight className="rotate-90" /></a></Button>
+          <div className="reveal mt-6 flex flex-wrap gap-3 md:mt-10">
+            <Button asChild className="h-12 px-4 font-bold md:px-6"><a href="#work">Explore My Work <ArrowUpRight className="rotate-90" /></a></Button>
             {!isPlaceholder(site.resumeUrl) && <Button asChild variant="outline" className="h-12 px-6 font-bold"><a href={site.resumeUrl} target="_blank" rel="noopener noreferrer" download><Download /> Download Resume</a></Button>}
-            <Button asChild variant="outline" className="h-12 px-6 font-bold"><a href={mail}>Get in Touch <ArrowUpRight /></a></Button>
+            <Button asChild variant="outline" className="h-12 px-4 font-bold md:px-6"><a href={mail}>Get in Touch <ArrowUpRight /></a></Button>
           </div>
-          <p className="reveal mt-10 text-sm leading-relaxed text-foreground">Product Strategy · Growth · Business Analysis · Founder's Office</p>
+          <p className="reveal mt-6 text-sm leading-relaxed text-foreground md:mt-10">Product Strategy · Growth · Business Analysis · Founder's Office</p>
           <p className="reveal mt-3 text-sm text-muted-foreground">Based in India · Open to remote opportunities</p>
         </section>
 
