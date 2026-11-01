@@ -117,18 +117,18 @@ function Index() {
             <p className="label mt-2">IIT Indore '25</p>
           </div>
           <h1 className="reveal mt-6 max-w-6xl text-4xl font-extrabold leading-[1.05] sm:text-6xl md:mt-8 lg:text-7xl xl:text-8xl">
-            I find problems worth solving.{" "}
-            <span className="text-primary">Then figure out what to do about them.</span>
+            I like figuring out how things work,<br />
+            <span className="text-primary">and how they could work better.</span>
           </h1>
           <p className="reveal mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:mt-10 md:text-lg">
-            I'm an IIT Indore graduate with experience across product growth, business strategy, and analytical problem-solving. I've worked on growth experiments, business processes, and product strategy, and enjoy taking ambiguous problems from analysis to execution.
+            I'm an IIT Indore graduate with experience across product growth, business strategy, and analytical problem-solving. I've worked on growth experiments, business processes, and product strategy, and enjoy taking ideas beyond the analysis and into execution.
           </p>
           <div className="reveal mt-6 flex flex-wrap gap-3 md:mt-10">
             <Button asChild className="h-12 px-4 font-bold md:px-6"><a href="#work">Explore My Work <ArrowUpRight className="rotate-90" /></a></Button>
             {!isPlaceholder(site.resumeUrl) && <Button asChild variant="outline" className="h-12 px-6 font-bold"><a href={site.resumeUrl} target="_blank" rel="noopener noreferrer" download><Download /> Download Resume</a></Button>}
             <Button asChild variant="outline" className="h-12 px-4 font-bold md:px-6"><a href={mail}>Get in Touch <ArrowUpRight /></a></Button>
           </div>
-          <p className="reveal mt-6 text-sm leading-relaxed text-foreground md:mt-10">Product Strategy · Growth · Business Analysis · Founder's Office</p>
+          <p className="reveal mt-6 text-sm leading-relaxed text-foreground md:mt-10">Product &amp; Business Strategy</p>
           <p className="reveal mt-3 text-sm text-muted-foreground">Based in India · Open to remote opportunities</p>
         </section>
 
