@@ -11,6 +11,8 @@ export const site = {
   linkedin: "https://linkedin.com/in/maitreyapathak",
   github: "https://github.com/MaitreyaPathak",
   resumeUrl: "#", // TODO: replace with resume PDF URL (e.g. /resume.pdf in public/)
+  // TODO: replace with Maitreya's real photograph (import from src/assets, e.g. portrait.jpg). "#" renders the styled placeholder in the About section.
+  portraitUrl: "#",
 };
 
 export const isPlaceholder = (url: string) => !url || url === "#";
