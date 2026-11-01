@@ -1,15 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import { site, projects, experience, principles, isPlaceholder, type Project } from "@/config/site";
+import { ArrowUpRight, Download, Menu, X } from "lucide-react";
+import { site, projects, experience, principles, capabilities, problemInterests, isPlaceholder, type Project } from "@/config/site";
+import { Button } from "@/components/ui/button";
+import { ProjectDialog } from "@/components/project-dialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Maitreya Pathak — Product, Growth & Business Strategy" },
-      { name: "description", content: "Portfolio of Maitreya Pathak, IIT Indore graduate. Product teardowns, CRO, process design and builds for Founder's Office and product roles." },
-      { property: "og:title", content: "Maitreya Pathak — I find problems worth solving." },
-      { property: "og:description", content: "Product strategy, growth and business case studies by Maitreya Pathak, IIT Indore." },
+      { title: "Maitreya Pathak | Product, Growth & Business Strategy" },
+      { name: "description", content: "IIT Indore graduate exploring product strategy, growth, business analysis, and execution. View selected case studies, projects, and experience." },
+      { property: "og:title", content: "Maitreya Pathak | Product, Growth & Business Strategy" },
+      { property: "og:description", content: "IIT Indore graduate exploring product strategy, growth, business analysis, and execution. View selected case studies, projects, and experience." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -31,6 +33,7 @@ function useReveal() {
 
 const nav = [
   { label: "Work", href: "#work" },
+  { label: "Experience", href: "#experience" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -46,22 +49,22 @@ function Header() {
   return (
     <header className="sticky top-0 z-50 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="text-sm font-extrabold tracking-[0.2em]">MAITREYA PATHAK</a>
+        <a href="#top" className="text-sm font-extrabold">MAITREYA PATHAK</a>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
           {nav.map((n) => <a key={n.href} href={n.href} className={link}>{n.label}</a>)}
-          <ExtLink href={site.resumeUrl} className={link}>Resume{isPlaceholder(site.resumeUrl) && " (soon)"}</ExtLink>
+          {!isPlaceholder(site.resumeUrl) && <ExtLink href={site.resumeUrl} className={link}>Resume</ExtLink>}
           <span className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-primary" /> Open to opportunities
           </span>
         </nav>
-        <button className="md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
+        <Button variant="ghost" size="icon" className="md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
           {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        </Button>
       </div>
       {open && (
         <nav className="flex flex-col gap-4 border-t px-6 py-5 md:hidden" aria-label="Mobile">
           {nav.map((n) => <a key={n.href} href={n.href} onClick={() => setOpen(false)} className={link}>{n.label}</a>)}
-          <ExtLink href={site.resumeUrl} className={link}>Resume{isPlaceholder(site.resumeUrl) && " (soon)"}</ExtLink>
+          {!isPlaceholder(site.resumeUrl) && <ExtLink href={site.resumeUrl} className={link}>Resume</ExtLink>}
           <span className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Open to opportunities
           </span>
@@ -71,12 +74,11 @@ function Header() {
   );
 }
 
-function ProjectCard({ p, i }: { p: Project; i: number }) {
-  const soon = isPlaceholder(p.url);
-  const inner = (
-    <>
+function ProjectCard({ p, i, onSelect }: { p: Project; i: number; onSelect: () => void }) {
+  return (
+    <article className="group reveal relative flex flex-col">
       <div className="relative overflow-hidden border transition-colors duration-300 group-hover:border-primary">
-        <img src={p.cover} alt={`${p.title} cover`} width={1600} height={912} loading="lazy"
+        <img src={p.cover} alt={i === 3 ? "ATLAS concept illustration: documents organised into a shortlist" : `${p.title} — illustrated project cover`} width={1600} height={912} loading="lazy"
           className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
         <span className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center bg-primary text-primary-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ArrowUpRight size={18} />
@@ -86,50 +88,45 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
         <p className="label">{p.category}</p>
         <span className="label shrink-0">{String(i + 1).padStart(2, "0")}</span>
       </div>
-      <h3 className="mt-3 text-2xl font-bold tracking-tight transition-colors group-hover:text-primary md:text-3xl">{p.title}</h3>
+      <h3 className="mt-3 text-2xl font-bold leading-tight transition-colors group-hover:text-primary md:text-3xl"><Button variant="link" onClick={onSelect} className="h-auto whitespace-normal p-0 text-left text-[inherit] font-[inherit] leading-[inherit] text-foreground hover:no-underline after:absolute after:inset-0 focus-visible:after:ring-2 focus-visible:after:ring-ring">{p.title}</Button></h3>
       <p className="mt-1 text-sm text-foreground/80">{p.subtitle}</p>
       <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{p.description}</p>
       <div className="mt-5 flex flex-wrap gap-2">
         {p.tags.map((t) => <span key={t} className="border px-2.5 py-1 font-mono text-[0.7rem] text-muted-foreground">{t}</span>)}
       </div>
-      <p className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-        {soon ? "Deck coming soon" : <>{p.linkLabel} <ArrowUpRight size={14} /></>}
-      </p>
-    </>
-  );
-  return soon ? (
-    <article className="group reveal block">{inner}</article>
-  ) : (
-    <a href={p.url} target="_blank" rel="noopener noreferrer" className="group reveal block" aria-label={`${p.title} — ${p.linkLabel} (opens in new tab)`}>{inner}</a>
+      <div className="mt-auto pt-6">
+        <p className="inline-flex items-center gap-1 text-sm font-semibold text-primary">{p.linkLabel} <ArrowUpRight size={14} /></p>
+        {i === 3 && <p className="mt-2 text-xs text-muted-foreground">Self-initiated build · Concept cover</p>}
+      </div>
+    </article>
   );
 }
 
 function Index() {
   useReveal();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const mail = `mailto:${site.email}`;
   return (
     <div id="top">
       <Header />
       <main>
         {/* Hero */}
-        <section className="mx-auto max-w-7xl px-6 pb-24 pt-24 md:pb-36 md:pt-36">
+        <section className="mx-auto max-w-7xl px-6 pb-16 pt-16 md:pb-20 md:pt-20">
           <p className="label reveal">Maitreya Pathak — IIT Indore '25</p>
-          <h1 className="reveal mt-8 max-w-6xl text-5xl font-extrabold leading-[0.95] tracking-[-0.04em] sm:text-7xl lg:text-[7.5rem]">
+          <h1 className="reveal mt-8 max-w-6xl text-4xl font-extrabold leading-[1.05] sm:text-6xl lg:text-7xl xl:text-8xl">
             I find problems worth solving.{" "}
             <span className="text-primary">Then figure out what to do about them.</span>
           </h1>
           <p className="reveal mt-10 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            I'm an IIT Indore graduate interested in the intersection of product, growth, and business strategy. I enjoy breaking down complex problems, identifying opportunities, and turning ideas into actionable solutions.
+            I'm an IIT Indore graduate with experience across product growth, business strategy, and analytical problem-solving. I've worked on growth experiments, business processes, and product strategy, and enjoy taking ambiguous problems from analysis to execution.
           </p>
           <div className="reveal mt-10 flex flex-wrap gap-3">
-            <a href="#work" className="inline-flex items-center gap-2 bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90">
-              Explore my work <ArrowUpRight size={16} className="rotate-90" />
-            </a>
-            <a href={mail} className="inline-flex items-center gap-2 border px-6 py-3.5 text-sm font-bold transition-colors hover:border-primary hover:text-primary">
-              Get in touch
-            </a>
+            <Button asChild className="h-12 px-6 font-bold"><a href="#work">Explore My Work <ArrowUpRight className="rotate-90" /></a></Button>
+            {!isPlaceholder(site.resumeUrl) && <Button asChild variant="outline" className="h-12 px-6 font-bold"><a href={site.resumeUrl} target="_blank" rel="noopener noreferrer" download><Download /> Download Resume</a></Button>}
+            <Button asChild variant="outline" className="h-12 px-6 font-bold"><a href={mail}>Get in Touch <ArrowUpRight /></a></Button>
           </div>
-          <p className="label reveal mt-16">Product Thinking / Growth / Business Strategy</p>
+          <p className="reveal mt-10 text-sm leading-relaxed text-foreground">Product Strategy · Growth · Business Analysis · Founder's Office</p>
+          <p className="reveal mt-3 text-sm text-muted-foreground">Based in India · Open to remote opportunities</p>
         </section>
 
         {/* Work */}
@@ -145,8 +142,27 @@ function Index() {
               </p>
             </div>
             <div className="mt-16 grid gap-x-10 gap-y-20 md:grid-cols-2">
-              {projects.map((p, i) => <ProjectCard key={p.title} p={p} i={i} />)}
+              {projects.map((p, i) => <ProjectCard key={p.title} p={p} i={i} onSelect={() => setSelectedProject(p)} />)}
             </div>
+          </div>
+        </section>
+
+        <section className="border-t">
+          <div className="mx-auto max-w-7xl px-6 py-24">
+            <p className="label reveal">(02) — Capabilities</p>
+            <h2 className="reveal mt-4 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">What I Can Bring to a Team</h2>
+            <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+              {capabilities.map((c, i) => <div key={c.title} className="reveal border-t pt-6"><p className="font-mono text-sm text-primary">{String(i + 1).padStart(2, "0")}</p><h3 className="mt-4 text-lg font-bold uppercase">{c.title}</h3><ul className="mt-5 space-y-3 text-sm leading-relaxed text-muted-foreground">{c.items.map((item) => <li key={item}>{item}</li>)}</ul></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" className="scroll-mt-16 border-t">
+          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-12">
+            <div className="reveal lg:col-span-4"><p className="label">(03) — Experience</p><h2 className="mt-4 text-4xl font-extrabold md:text-6xl">Thinking.<br />Doing.<br /><span className="text-primary">Learning.</span></h2><p className="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">Product growth, business strategy and analytical problem-solving across teams.</p></div>
+            <ol className="lg:col-span-7 lg:col-start-6">
+              {experience.map((e, i) => <li key={e.org} className="reveal relative grid grid-cols-[2rem_1fr] gap-4 pb-12 last:pb-0 sm:grid-cols-[3rem_1fr] sm:gap-6"><div className="relative"><span className="relative z-10 block bg-background pb-3 font-mono text-sm text-primary">{String(i + 1).padStart(2, "0")}</span>{i < experience.length - 1 && <span className="absolute bottom-0 left-2 top-8 w-px bg-border" />}</div><div className="border-t pt-5"><div className="flex flex-wrap items-baseline justify-between gap-2"><h3 className="text-xl font-bold">{e.org}</h3>{e.period && <p className="text-xs text-muted-foreground">{e.period}</p>}</div><p className="mt-2 text-sm text-muted-foreground">{e.role}</p><p className="mt-5 text-lg font-bold text-primary">{e.highlight}</p><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{e.body}</p><p className="mt-3 text-sm leading-relaxed text-foreground/80">{e.detail}</p></div></li>)}
+            </ol>
           </div>
         </section>
 
@@ -154,32 +170,22 @@ function Index() {
         <section id="about" className="scroll-mt-16 border-t">
           <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 lg:grid-cols-12">
             <div className="reveal lg:col-span-5">
-              <p className="label">(02) — About</p>
+              <p className="label">(04) — About</p>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight md:text-6xl">A little about me.</h2>
               <div className="mt-8 space-y-5 leading-relaxed text-muted-foreground">
                 <p>I'm a 2025 B.Tech graduate from IIT Indore in Metallurgical Engineering and Materials Science.</p>
-                <p>My experience spans product growth, business strategy, and analytical problem-solving. I've worked with teams across early-stage environments and enjoy figuring out how businesses can build better products, improve processes, and grow.</p>
-                <p className="text-foreground">I'm particularly interested in working closely with founders and small teams where I can take ownership, move across different problem areas, and turn ambiguous challenges into tangible outcomes.</p>
+                <p>My experience spans product growth, business strategy, and analytical problem-solving. I'm interested in early-stage and growth-stage companies building better products and processes.</p>
+                <p className="text-foreground">I enjoy working closely with founders and small teams, taking ownership across different problem areas, and turning ambiguous challenges into tangible outcomes.</p>
               </div>
             </div>
-            <ol className="lg:col-span-6 lg:col-start-7">
-              {experience.map((e) => (
-                <li key={e.org} className="reveal grid gap-2 border-t py-7 sm:grid-cols-[1fr_auto] sm:gap-6">
-                  <div>
-                    <h3 className="text-lg font-bold">{e.org} <span className="font-normal text-muted-foreground">— {e.role}</span></h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.body}</p>
-                  </div>
-                  {e.period && <p className="label sm:text-right">{e.period}</p>}
-                </li>
-              ))}
-            </ol>
+            <div className="lg:col-span-6 lg:col-start-7"><h3 className="reveal text-2xl font-bold">Problems I Enjoy Working On</h3><ul className="mt-7">{problemInterests.map((problem, i) => <li key={problem} className="reveal flex gap-5 border-t py-6"><span className="font-mono text-xs text-primary">{String(i + 1).padStart(2, "0")}</span><p className="text-base leading-relaxed">{problem}</p></li>)}</ul></div>
           </div>
         </section>
 
         {/* Approach */}
         <section className="border-t">
           <div className="mx-auto max-w-7xl px-6 py-24">
-            <p className="label reveal">(03) — Approach</p>
+            <p className="label reveal">(05) — Approach</p>
             <h2 className="reveal mt-4 text-4xl font-extrabold tracking-tight md:text-6xl">How I approach problems.</h2>
             <div className="mt-14 grid gap-10 md:grid-cols-3">
               {principles.map((p) => (
@@ -196,16 +202,14 @@ function Index() {
         {/* Contact */}
         <section id="contact" className="scroll-mt-16 border-t">
           <div className="mx-auto max-w-7xl px-6 py-28">
-            <p className="label reveal">(04) — Contact</p>
-            <h2 className="reveal mt-6 max-w-5xl text-5xl font-extrabold leading-[0.95] tracking-[-0.04em] md:text-8xl">
+            <p className="label reveal">(06) — Contact</p>
+            <h2 className="reveal mt-6 max-w-5xl text-4xl font-extrabold leading-[1.05] md:text-7xl">
               Have an interesting problem to <span className="text-primary">solve?</span>
             </h2>
             <p className="reveal mt-8 max-w-xl text-lg text-muted-foreground">
-              I'm always interested in connecting with founders and teams building ambitious products and businesses.
+              I'm always interested in connecting with founders and teams building ambitious products and businesses. If you're hiring for a role across product, growth, strategy, or the Founder's Office, I'd love to connect.
             </p>
-            <a href={mail} className="reveal mt-10 inline-flex items-center gap-2 bg-primary px-8 py-4 text-base font-bold text-primary-foreground transition-opacity hover:opacity-90">
-              Let's talk <ArrowUpRight size={18} />
-            </a>
+            <div className="reveal mt-10 flex flex-wrap gap-3"><Button asChild className="h-12 px-8 font-bold"><a href={mail}>Let's talk <ArrowUpRight /></a></Button><Button asChild variant="outline" className="h-12 px-6"><a href={site.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight /></a></Button></div>
             <div className="reveal mt-16 grid gap-px border sm:grid-cols-3">
               {[
                 { k: "Email", v: site.email, href: mail, ext: false },
@@ -223,12 +227,13 @@ function Index() {
       <footer className="border-t">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-extrabold tracking-[0.2em]">MAITREYA PATHAK</p>
+            <p className="text-sm font-extrabold">MAITREYA PATHAK</p>
             <p className="label mt-1">Product / Growth / Business Strategy</p>
           </div>
           <p className="text-xs text-muted-foreground">© 2026 Maitreya Pathak</p>
         </div>
       </footer>
+      <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
     </div>
   );
 }
