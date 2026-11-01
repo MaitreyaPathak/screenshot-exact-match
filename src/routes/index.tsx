@@ -49,7 +49,7 @@ function Header() {
   return (
     <header className="sticky top-0 z-50 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="text-sm font-extrabold">MAITREYA PATHAK</a>
+        <a href="#top" className="text-base font-bold tracking-wide text-foreground">MAITREYA PATHAK</a>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
           {nav.map((n) => <a key={n.href} href={n.href} className={link}>{n.label}</a>)}
           {!isPlaceholder(site.resumeUrl) && <ExtLink href={site.resumeUrl} className={link}>Resume</ExtLink>}
@@ -112,7 +112,10 @@ function Index() {
       <main>
         {/* Hero */}
         <section className="mx-auto max-w-7xl px-6 pb-10 pt-10 md:pb-20 md:pt-20">
-          <p className="label reveal">Maitreya Pathak — IIT Indore '25</p>
+          <div className="reveal">
+            <p className="text-2xl font-semibold tracking-wide text-foreground">MAITREYA PATHAK</p>
+            <p className="label mt-2">IIT Indore '25</p>
+          </div>
           <h1 className="reveal mt-6 max-w-6xl text-4xl font-extrabold leading-[1.05] sm:text-6xl md:mt-8 lg:text-7xl xl:text-8xl">
             I find problems worth solving.{" "}
             <span className="text-primary">Then figure out what to do about them.</span>
